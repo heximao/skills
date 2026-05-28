@@ -1,0 +1,11 @@
+# macOS
+.DS_Store
+
+# OMC runtime state
+.omc/
+
+# Stray files
+README-Local.md
+
+# Symlinks (cua-driver points to /Applications, not part of this repo)
+cua-driver
