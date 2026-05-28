@@ -1,11 +1,59 @@
-# Skills 目录
+# Skills 仓库
 
-本目录用于存放和管理 Claude 代理的 Skills（技能扩展）。
+集中存放所有 Claude Code / OpenCode skills 的汇总仓库。
 
-## 目录说明
+## 安装原则
 
-- **全局用户 Skills**：通过 npm 全局安装的 Skills 存放在此目录
-- **符号链接**：可以通过符号链接将 Skills 指向 Claude Code、OpenCode 等代理目录
+**不要将整个仓库的所有 skill 一股脑安装到全局目录或项目目录。** AI 会加载已安装 skill 的全部内容，安装过多无关 skill 会导致：
+
+- Token 消耗大幅增加
+- 上下文窗口被无关内容挤占
+- AI 理解精度下降，产生幻觉
+
+**正确做法：按需安装，用符号链接。**
+
+### 安装优先级
+
+1. **项目目录优先** — 只在某个项目用到的 skill，安装到该项目的 `.claude/skills/` 下
+2. **全局目录其次** — 确定会在多个项目使用的 skill，才安装到全局 `~/.claude/skills/`
+
+### 安装命令
+
+```bash
+# 安装到项目目录（推荐）
+ln -s ~/.agents/skills/skill-name ~/your-project/.claude/skills/skill-name
+
+# 安装到全局目录（仅限跨项目通用 skill）
+ln -s ~/.agents/skills/skill-name ~/.claude/skills/skill-name
+```
+
+### 卸载命令
+
+```bash
+# 删除符号链接（不会删除源文件）
+rm ~/your-project/.claude/skills/skill-name
+```
+
+### 验证安装
+
+```bash
+ls -la ~/your-project/.claude/skills/ | grep skill-name
+```
+
+## 已有 Skills
+
+| Skill | 用途 |
+|-------|------|
+| agent-development | 创建和调试 Claude agent |
+| cua-driver | macOS 原生应用自动化操作 |
+| frontend-design | 前端界面设计与开发 |
+| hook-development | Claude Code hook 开发 |
+| kami | 专业文档排版（简历、白皮书、PPT、落地页） |
+| skill-creator | 创建、测试、优化 skill |
+| software-development | 通用软件开发 skill 集合 |
+| tender-offer-arbitrage | 要约套利分析 |
+| transaction-verification | 交易记录核对与验证 |
+| 股票智能分析师 | A股/港股/美股分析 |
 
 ## 文件结构
 
@@ -13,49 +61,20 @@
 
 ```
 skill-name/
-├── SKILL.md          # Skill 的详细描述和使用说明
-├── prompt.md         # 提示词文件（可选）
-├── examples/         # 使用示例（可选）
-└── utils/            # 工具函数（可选）
+├── SKILL.md          # 必需：skill 定义（含 YAML frontmatter）
+├── scripts/          # 可选：可执行脚本
+├── examples/         # 可选：使用示例
+└── references/       # 可选：参考文档
 ```
 
 ## 创建新 Skill
 
-1. 在本目录创建新文件夹：`skill-name/`
-2. 创建 `SKILL.md` 文件，描述 Skill 的功能和使用方式
-3. 添加必要的实现文件
-4. 配置符号链接（如需要）
-
-## 符号链接配置
-
-将 Skill 链接到 Claude 代理目录：
-
-```bash
-# 创建符号链接：将源 Skill 链接到目标代理目录
-# -s 表示创建软链接（symbolic link）
-# 第一个参数是源路径（全局 Skills 目录），第二个是目标路径（代理 Skills 目录）
-ln -s /Users/user-name/.agents/skills/skill-name \
-      /Users/user-name/.claude/skills/skill-name
-
-# 验证符号链接创建是否成功
-# 列出目标目录中的所有文件（包括隐藏文件），并过滤出特定的 skill 名称
-ls -la /Users/user-name/.claude/skills/ | grep skill-name
-
-# 删除符号链接（如需要）
-# 使用 rm 命令删除链接本身，不会删除源文件
-rm /Users/user-name/.claude/skills/skill-name
-```
-
-**说明：**
-- 替换 `skill-name` 为实际的 Skill 目录名称
-- 源路径：全局 Skills 存放目录（本目录）
-- 目标路径：Claude 代理的 Skills 目录
+1. 在本目录创建新文件夹：`mkdir new-skill-name`
+2. 创建 `SKILL.md`，必须包含 `name` 和 `description` frontmatter
+3. 按需添加 scripts / examples / references
+4. 提交并推送到 GitHub
 
 ## 参考资源
 
 - [开源 Skill 项目参考](https://github.com/topics/claude-skill)
 - [skills.sh - Vercel 官方仓库](https://github.com/vercel/skills.sh)
-
-## 已有 Skills
-
-查看本目录的子文件夹列表可查看已安装的全部 Skills。
