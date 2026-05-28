@@ -31,14 +31,18 @@ skill-name/
 将 Skill 链接到 Claude 代理目录：
 
 ```bash
-# 为 Claude 创建符号链接示例
+# 创建符号链接：将源 Skill 链接到目标代理目录
+# -s 表示创建软链接（symbolic link）
+# 第一个参数是源路径（全局 Skills 目录），第二个是目标路径（代理 Skills 目录）
 ln -s /Users/user-name/.agents/skills/skill-name \
       /Users/user-name/.claude/skills/skill-name
 
-# 验证链接是否创建成功
+# 验证符号链接创建是否成功
+# 列出目标目录中的所有文件（包括隐藏文件），并过滤出特定的 skill 名称
 ls -la /Users/user-name/.claude/skills/ | grep skill-name
 
 # 删除符号链接（如需要）
+# 使用 rm 命令删除链接本身，不会删除源文件
 rm /Users/user-name/.claude/skills/skill-name
 ```
 
