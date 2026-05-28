@@ -4,8 +4,8 @@
 # OMC runtime state
 .omc/
 
+# Symlinks
+cua-driver
+
 # Stray files
 README-Local.md
-
-# Symlinks (cua-driver points to /Applications, not part of this repo)
-cua-driver
