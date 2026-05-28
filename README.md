@@ -32,14 +32,14 @@ skill-name/
 
 ```bash
 # 为 Claude 创建符号链接示例
-ln -s /Users/saibopika/.agents/skills/skill-name \
-      /Users/saibopika/.claude/skills/skill-name
+ln -s /Users/user-name/.agents/skills/skill-name \
+      /Users/user-name/.claude/skills/skill-name
 
 # 验证链接是否创建成功
-ls -la /Users/saibopika/.claude/skills/ | grep skill-name
+ls -la /Users/user-name/.claude/skills/ | grep skill-name
 
 # 删除符号链接（如需要）
-rm /Users/saibopika/.claude/skills/skill-name
+rm /Users/user-name/.claude/skills/skill-name
 ```
 
 **说明：**
